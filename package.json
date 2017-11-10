@@ -1,0 +1,39 @@
+{
+  "name": "pulling",
+  "version": "1.0.0",
+  "description": "Flexible slideout menu for mobile webapps",
+  "main": "build/pulling.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rollup -c",
+    "dist": "npm run build && rollup -c --environment=BUILD:production",
+    "prepare": "npm run dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pitaj/pulling.git"
+  },
+  "keywords": [
+    "pull",
+    "out",
+    "slide",
+    "out",
+    "menu",
+    "mobile"
+  ],
+  "author": "Peter Jaszkowiak <p.jaszkow@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pitaj/pulling/issues"
+  },
+  "homepage": "https://github.com/pitaj/pulling#readme",
+  "devDependencies": {
+    "rollup": "^0.51.1",
+    "rollup-plugin-typescript": "^0.8.1",
+    "rollup-plugin-uglify": "^2.0.1",
+    "tslint": "^5.8.0",
+    "tslint-config-airbnb": "^5.3.0",
+    "typescript": "^2.6.1",
+    "uglifyjs": "^2.4.11"
+  }
+}

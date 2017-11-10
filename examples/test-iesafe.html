@@ -1,0 +1,95 @@
+<html>
+    <body style="padding: 0; margin: 0; overflow-x: hidden;">
+      <div id="menu-left" style="display: none; background: #eee;">
+        <button class="open-left" style="float:right">LL</button>
+        <nav>
+          <ul>
+            <li><a href="#nowhere" title="Lorum ipsum dolor sit amet">Lorem</a></li>
+            <li><a href="#nowhere" title="Aliquam tincidunt mauris eu risus">Aliquam</a></li>
+            <li><a href="#nowhere" title="Morbi in sem quis dui placerat ornare">Morbi</a></li>
+            <li><a href="#nowhere" title="Praesent dapibus, neque id cursus faucibus">Praesent</a></li>
+            <li><a href="#nowhere" title="Pellentesque fermentum dolor">Pellentesque</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div id="menu-right" style="display: none; background: #eee;">
+          <nav>
+            <ul>
+              <li><a href="#nowhere" title="Lorum ipsum dolor sit amet">Lorem</a></li>
+              <li><a href="#nowhere" title="Aliquam tincidunt mauris eu risus">Aliquam</a></li>
+              <li><a href="#nowhere" title="Morbi in sem quis dui placerat ornare">Morbi</a></li>
+              <li><a href="#nowhere" title="Praesent dapibus, neque id cursus faucibus">Praesent</a></li>
+              <li><a href="#nowhere" title="Pellentesque fermentum dolor">Pellentesque</a></li>
+            </ul>
+          </nav>
+        </div>
+      <div id="panel" style="padding: 15px; min-height: 100vh; background: white">
+        <button class="open-left" style="float:left">LL</button>
+        <button class="open-right" style="float:right">RR</button>
+  
+        <h1>HTML Ipsum Presents</h1>
+        
+        <p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
+        
+        <h2>Header Level 2</h2>
+        
+        <ol>
+          <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+          <li>Aliquam tincidunt mauris eu risus.</li>
+        </ol>
+        
+        <blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.</p></blockquote>
+        
+        <h3>Header Level 3</h3>
+        
+        <ul>
+          <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+          <li>Aliquam tincidunt mauris eu risus.</li>
+        </ul>
+        
+        <pre><code>
+        #header h1 a {
+          display: block;
+          width: 300px;
+          height: 80px;
+        }
+        </code></pre>
+      </div>
+  
+      <script src="../build/pulling.js"></script>
+      <script>
+        var panel = document.querySelector('#panel');
+  
+        var openLeft = document.querySelectorAll('.open-left');
+        var menuLeft = document.querySelector('#menu-left');
+  
+        var pullinLeft = Pulling.create({
+          menu: menuLeft,
+          panel: panel,
+          side: 'left',
+        });
+  
+        [].slice.call(openLeft, 0).forEach(function (x) { x.addEventListener('click', function () { pullinLeft.toggle() }) });
+        menuLeft.style.display = '';
+  
+        var openRight = document.querySelectorAll('.open-right');
+        var menuRight = document.querySelector('#menu-right');
+  
+        var pullinRight = Pulling.create({
+          menu: menuRight,
+          panel: panel,
+          side: 'right',
+          mode: 'reveal',
+        });
+  
+        [].slice.call(openRight, 0).forEach(function (x) { x.addEventListener('click', function () { pullinRight.toggle() }) });
+        menuRight.style.display = '';
+  
+        pullinLeft.on('beforeopen', function () { pullinRight.disableTouch() });
+        pullinLeft.on('closed', function () { pullinRight.enableTouch() });
+        pullinRight.on('beforeopen', function () { pullinLeft.disableTouch() });
+        pullinRight.on('closed', function () { pullinLeft.enableTouch() });
+      </script>
+    </body>
+  </html>
+  

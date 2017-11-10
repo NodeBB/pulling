@@ -1,0 +1,26 @@
+{
+  "include": [
+    "src/*.d.ts",
+    "src/*.ts"
+  ],
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "module": "es2015",
+    "target": "es5",
+    "moduleResolution": "node",
+    "lib": [
+      "dom",
+      "es5",
+      "es2015.promise"
+    ],
+    "sourceMap": true,
+    "noEmit": true
+  },
+  "typeAcquisition": {
+    "enable": false
+  }
+}
