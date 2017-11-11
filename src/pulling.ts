@@ -11,7 +11,7 @@ export default class Pulling {
   } = {};
 
   static create(options: Options) {
-    const mode = options.mode || 'drawer';
+    const mode = options.mode || Object.keys(Pulling.modes)[0] || 'drawer';
     if (!Pulling.modes[mode]) {
       const modes = Object.keys(Pulling.modes).map(x => `"${x}"`).join(', ');
       throw TypeError(`${'`mode`'} must be one of ${modes}`);
@@ -90,10 +90,6 @@ export default class Pulling {
     assertArg(
       this.side === 'left' || this.side === 'right', 
       '`side` must be equal to "left" or "right"',
-    );
-    assertArg(
-      this.mode === 'drawer' || this.mode === 'reveal',
-      '`type` must be equal to "drawer" or "reveal"',
     );
     assertArg(
       typeof this.margin === 'number',
