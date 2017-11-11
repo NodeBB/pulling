@@ -196,7 +196,7 @@ export default class Pulling {
     Object.assign(this.menu.style, this.styles.open.menu);
     Object.assign(this.panel.style, this.styles.open.panel);
 
-    this.afterTransitionend(() => {
+    const after = () => {
       this.state.opening = false;
       this.state.opened = true;
 
@@ -204,7 +204,12 @@ export default class Pulling {
       Object.assign(this.panel.style, this.styles.open.panel);
       
       this.emit('opened');
-    });
+    };
+    if (offset === this.width) {
+      after();
+    } else {
+      this.afterTransitionend(after);
+    }
 
     return this;
   }
@@ -237,7 +242,7 @@ export default class Pulling {
     Object.assign(this.menu.style, this.styles.closed.menu);
     Object.assign(this.panel.style, this.styles.closed.panel);
 
-    this.afterTransitionend(() => {
+    const after = () => {
       this.state.closing = false;
       this.state.closed = true;
 
@@ -245,7 +250,12 @@ export default class Pulling {
       Object.assign(this.panel.style, this.styles.closed.panel);
       
       this.emit('closed');
-    });
+    };
+    if (offset === 0) {
+      after();
+    } else {
+      this.afterTransitionend(after);
+    }
 
     return this;
   }
