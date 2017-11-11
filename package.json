@@ -1,6 +1,6 @@
 {
   "name": "pulling",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Flexible slideout menu for mobile webapps",
   "main": "build/pulling.js",
   "scripts": {
