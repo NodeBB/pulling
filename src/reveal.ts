@@ -28,10 +28,6 @@ export default class Reveal extends TouchPulling {
 
     Object.assign(this.menu.style, this.styles.base.menu, this.styles.closed.menu);
     Object.assign(this.panel.style, this.styles.base.panel, this.styles.closed.panel);
-
-    if (this.touch) {
-      this.addTouchEvents();
-    }
   }
 
   protected offset() {

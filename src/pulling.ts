@@ -287,7 +287,4 @@ export default class Pulling {
   protected offset() {
     return 0;
   }
-
-  /** set offset */
-  protected applyOffset(offset: number) {}
 }

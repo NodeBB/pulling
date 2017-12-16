@@ -4,12 +4,18 @@ export default class TouchPulling extends Pulling {
   constructor(options: Options) {
     super(options);
 
-    this.touch = (options.touch == null) ? true : options.touch;
+    this.touch = options.touch !== false;
+    
+    if (this.touch) {
+      this.addTouchEvents();
+    }
   }
+  protected touch: boolean;
   
   protected touched = false;
-
-  protected touch: boolean;
+  
+  /** set offset */
+  protected applyOffset(offset: number) {}
 
   protected initTouchEvents() {
     const { width, margin, side, slope, sensitivity, menu, panel } = this;
