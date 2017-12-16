@@ -27,6 +27,8 @@ export default class Drawer extends TouchPulling {
 
     Object.assign(this.menu.style, this.styles.base.menu, this.styles.closed.menu);
     Object.assign(this.panel.style, this.styles.base.panel, this.styles.closed.panel);
+
+    this.initTransitionend();
   }
 
   protected offset() {
@@ -42,16 +44,20 @@ export default class Drawer extends TouchPulling {
     this.menu.style.transform = `translateX(${offset * sign}px)`;
   }
 
-  private prevTransitionEnd: EventListener;
+  private onTransitionend: Function | null;
 
   protected afterTransitionend(callback: Function) {
-    const after = () => {
-      this.menu.removeEventListener('transitionend', after);
-      callback();
-    };
-    this.menu.removeEventListener('transitionend', this.prevTransitionEnd);
-    this.prevTransitionEnd = after;
-    this.menu.addEventListener('transitionend', after, false);
+    this.onTransitionend = callback;
+  }
+
+  private initTransitionend() {
+    this.menu.addEventListener('transitionend', () => {
+      if (this.onTransitionend) {
+        this.onTransitionend();
+      }
+
+      this.onTransitionend = null;
+    }, false);
   }
 }
 

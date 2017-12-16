@@ -28,6 +28,8 @@ export default class Reveal extends TouchPulling {
 
     Object.assign(this.menu.style, this.styles.base.menu, this.styles.closed.menu);
     Object.assign(this.panel.style, this.styles.base.panel, this.styles.closed.panel);
+
+    this.initTransitionend();
   }
 
   protected offset() {
@@ -40,16 +42,20 @@ export default class Reveal extends TouchPulling {
     this.panel.style.transform = `translateX(${offset * sign}px)`;
   }
 
-  private prevTransitionEnd: EventListener;
+  private onTransitionend: Function | null;
 
   protected afterTransitionend(callback: Function) {
-    const after = () => {
-      this.panel.removeEventListener('transitionend', after);
-      callback();
-    };
-    this.panel.removeEventListener('transitionend', this.prevTransitionEnd);
-    this.prevTransitionEnd = after;
-    this.panel.addEventListener('transitionend', after, false);
+    this.onTransitionend = callback;
+  }
+
+  private initTransitionend() {
+    this.panel.addEventListener('transitionend', () => {
+      if (this.onTransitionend) {
+        this.onTransitionend();
+      }
+
+      this.onTransitionend = null;
+    }, false);
   }
 }
 

@@ -136,6 +136,11 @@ export default class TouchPulling extends Pulling {
         return;
       }
 
+      this.touched = false;
+      if (firstMove) {
+        return;
+      }
+
       this.emit('touchend', e);
       
       Object.assign(this.panel.style, this.styles.base.panel);
