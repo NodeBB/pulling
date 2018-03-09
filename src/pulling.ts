@@ -5,9 +5,9 @@ const timingFunctions: timingFunctions[] = [
   'ease-in-out', 'step-start', 'step-end',
 ];
 
-export default class Pulling {
+export default abstract class Pulling {
   static modes: {
-    [key: string]: typeof Pulling;
+    [key: string]: new (options: Options) => Pulling;
   } = {};
 
   static create(options: Options) {
