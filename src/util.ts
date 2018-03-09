@@ -15,11 +15,11 @@ export function polyfill() {
     // @ts-ignore: Property does not exist
     Element.prototype.oMatchesSelector;
 
-  Object.entries = Object.entries || ((obj: any) => {
-    return Object.keys(obj).map(key => [key, obj[key]]);
+  Object.entries = /* Object.entries || */ ((obj: any) => {
+    return Object.keys(obj).map(key => [key, obj[key]] as [string, any]);
   });
 
-  Object.values = Object.values || ((obj: any) => {
+  Object.values = /* Object.values || */ ((obj: any) => {
     return Object.keys(obj).map(key => obj[key]);
   });
 
