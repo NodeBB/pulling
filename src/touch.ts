@@ -5,12 +5,14 @@ export default class TouchPulling extends Pulling {
     super(options);
 
     this.touch = options.touch !== false;
+    this.ignoreScrollables = options.ignoreScrollables !== false;
     
     if (this.touch) {
       this.addTouchEvents();
     }
   }
   protected touch: boolean;
+  protected ignoreScrollables: boolean;
   
   protected touched = false;
   
@@ -18,6 +20,7 @@ export default class TouchPulling extends Pulling {
   protected applyOffset(offset: number) {}
 
   protected initTouchEvents() {
+    // tslint:disable-next-line no-this-assignment
     const { width, margin, side, slope, sensitivity, menu, panel } = this;
 
     const sign = (side === 'left' ? 1 : -1);
@@ -36,8 +39,32 @@ export default class TouchPulling extends Pulling {
 
     let firstMove = false;
 
+    const scrollable = (elem: HTMLElement | null): boolean => {
+      if (
+        !elem ||
+        elem === document.documentElement || 
+        elem === document.body
+      ) {
+        return false;
+      }
+
+      const { overflowX, overflowY } = getComputedStyle(elem);
+      
+      return overflowX === 'auto' || 
+        overflowX === 'scroll' || 
+        (overflowX === 'visible' && overflowY !== 'visible') ||
+        scrollable(elem.parentElement);
+    };
+
     const onTouchstart = (e: TouchEvent) => {
-      if (this.ignoreSelector && (e.target as HTMLElement).matches(this.ignoreSelector)) {
+      const target = e.target as HTMLElement;
+
+      if (this.ignoreSelector && (target).matches(this.ignoreSelector)) {
+        return;
+      }
+
+      // ignore when the element is scrollable
+      if (this.ignoreScrollables && scrollable(target)) {
         return;
       }
 

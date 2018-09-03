@@ -93,4 +93,10 @@ interface Options {
    * (default: `true`)
    */
   touch?: boolean;
+
+  /**
+   * Ignore horizontally scrollable elements
+   * (default: `true`)
+   */
+  ignoreScrollables?: boolean;
 }

@@ -131,6 +131,10 @@ movement that should be accepted
 
   Enable touch functionality
 
++ **ignoreScrollables** - `boolean` (default: `true`)
+
+  Ignore horizontally scrollable elements
+
 ## Instance Methods
 
 All methods are chainable
