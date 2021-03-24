@@ -6,7 +6,7 @@ export default class Drawer extends TouchPulling {
 
     this.styles.base.menu = {
       transition: `transform ${this.timing}ms ${this.timingFunction}`,
-      
+
       overflowX: 'hidden',
       overflowY: 'auto',
 

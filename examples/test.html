@@ -67,6 +67,8 @@
         menu: menuLeft,
         panel,
         side: 'left',
+        mode: 'drawer',
+        openPanelClass: 'left-menu-open',
       });
 
       openLeft.forEach(x => x.addEventListener('click', () => pullinLeft.toggle()));
@@ -90,5 +92,11 @@
       pullinRight.on('beforeopen', () => pullinLeft.disableTouch());
       pullinRight.on('closed', () => pullinLeft.enableTouch());
     </script>
+
+    <style>
+      .left-menu-open #menu-left {
+          box-shadow: 6px 0px 10px 0px #c7c7c7;
+      }
+    </style>
   </body>
 </html>

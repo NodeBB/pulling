@@ -13,8 +13,6 @@ export default class Reveal extends TouchPulling {
       top: '0',
       bottom: '0',
       width: `${this.width}px`,
-
-      zIndex: '-1',
     };
     this.styles.base.panel = {
       transition: `transform ${this.timing}ms ${this.timingFunction}`,

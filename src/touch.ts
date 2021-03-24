@@ -6,16 +6,16 @@ export default class TouchPulling extends Pulling {
 
     this.touch = options.touch !== false;
     this.ignoreScrollables = options.ignoreScrollables !== false;
-    
+
     if (this.touch) {
       this.addTouchEvents();
     }
   }
   protected touch: boolean;
   protected ignoreScrollables: boolean;
-  
+
   protected touched = false;
-  
+
   /** set offset */
   protected applyOffset(offset: number) {}
 
@@ -42,16 +42,16 @@ export default class TouchPulling extends Pulling {
     const scrollable = (elem: HTMLElement | null): boolean => {
       if (
         !elem ||
-        elem === document.documentElement || 
+        elem === document.documentElement ||
         elem === document.body
       ) {
         return false;
       }
 
       const { overflowX, overflowY } = getComputedStyle(elem);
-      
-      return overflowX === 'auto' || 
-        overflowX === 'scroll' || 
+
+      return overflowX === 'auto' ||
+        overflowX === 'scroll' ||
         (overflowX === 'visible' && overflowY !== 'visible') ||
         scrollable(elem.parentElement);
     };
@@ -77,11 +77,11 @@ export default class TouchPulling extends Pulling {
       if (e.touches.length !== 1) {
         return;
       }
-      
+
       const { clientX, clientY } = e.touches[0];
       const offset = this.offset();
       const region = margin + offset;
-      
+
       if (side === 'left' && clientX <= region ||
         side === 'right' && window.innerWidth - clientX <= region) {
         this.touched = true;
@@ -90,11 +90,11 @@ export default class TouchPulling extends Pulling {
         startClientY = clientY;
 
         lastClientX = clientX;
-        
+
         startOffset = offset;
 
         lastTime = Date.now();
-        
+
         firstMove = true;
       }
     };
@@ -108,11 +108,11 @@ export default class TouchPulling extends Pulling {
 
       const { clientX, clientY } = e.touches[0];
       const diffX = (clientX - startClientX) * sign;
-      
+
       if (Math.abs(diffX) < 10) {
         return;
       }
-      
+
       if (firstMove) {
         const diffY = clientY - startClientY;
         const currentSlope = Math.abs(diffY / diffX);
@@ -120,15 +120,15 @@ export default class TouchPulling extends Pulling {
           this.touched = false;
           return;
         }
-        
+
         if (this.state.closed && diffX > 0) {
           this.emit('beforeopen');
         } else if (this.state.opened) {
           this.emit('beforeopen');
         }
 
-        menu.style.transition = null;
-        panel.style.transition = null;
+        menu.style.transition = '';
+        panel.style.transition = '';
       }
 
       if (this.state.opened && diffX > 0 || this.state.closed && diffX < 0) {
@@ -142,7 +142,7 @@ export default class TouchPulling extends Pulling {
       this.state.closed = false;
 
       const dx = (clientX - lastClientX) * sign;
-      
+
       const opening = dx > 0;
       this.state.opening = opening;
       this.state.closing = !opening;
@@ -169,13 +169,13 @@ export default class TouchPulling extends Pulling {
       }
 
       this.emit('touchend', e);
-      
+
       Object.assign(this.panel.style, this.styles.base.panel);
       Object.assign(this.menu.style, this.styles.base.menu);
 
       const offset = this.offset();
       const { clientX } = e.changedTouches[0];
-      
+
       let x1;
       let t1;
 
@@ -193,8 +193,8 @@ export default class TouchPulling extends Pulling {
       const speed = (x2 - x1) / (t2 - t1) * sign;
 
       if (
-        offset > width / 2 && 
-        speed > -sensitivity || 
+        offset > width / 2 &&
+        speed > -sensitivity ||
         speed > sensitivity
       ) {
         this.open(e);
@@ -235,9 +235,9 @@ export default class TouchPulling extends Pulling {
   ignore(selector: string) {
     this.ignores.push(selector);
     this.ignoreSelector = this.ignores.join(', ');
-    return this; 
+    return this;
   }
-  /** 
+  /**
    * Remove selector from ignore list
    * _Does not_ override `ignore`
    */

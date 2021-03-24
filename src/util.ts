@@ -8,9 +8,11 @@ export function polyfill() {
   Element.prototype.matches = Element.prototype.matches ||
     // @ts-ignore: Property does not exist
     Element.prototype.matchesSelector ||
+    // @ts-ignore: Property does not exist
     Element.prototype.webkitMatchesSelector ||
     // @ts-ignore: Property does not exist
     Element.prototype.mozMatchesSelector ||
+    // @ts-ignore: Property does not exist
     Element.prototype.msMatchesSelector ||
     // @ts-ignore: Property does not exist
     Element.prototype.oMatchesSelector;

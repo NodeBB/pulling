@@ -30,7 +30,8 @@ export default abstract class Pulling {
   protected width: number;
   protected sensitivity: number;
   protected slope: number;
-  
+  protected openPanelClass: string | null;
+
   protected styles: Styles = {
     base: {
       menu: {},
@@ -66,6 +67,7 @@ export default abstract class Pulling {
       sensitivity,
       slope,
       touch,
+      openPanelClass,
     } = options;
 
     this.menu = menu;
@@ -78,17 +80,18 @@ export default abstract class Pulling {
     this.width = width || 256;
     this.sensitivity = sensitivity || 0.25;
     this.slope = slope || 0.5;
+    this.openPanelClass = openPanelClass || null;
 
     assertArg(
-      this.menu instanceof Element, 
+      menu instanceof Element,
       '`menu` must be of type `Element`',
     );
     assertArg(
-      this.panel instanceof Element, 
+      panel instanceof Element,
       '`panel` must be of type `Element`',
     );
     assertArg(
-      this.side === 'left' || this.side === 'right', 
+      this.side === 'left' || this.side === 'right',
       '`side` must be equal to "left" or "right"',
     );
     assertArg(
@@ -181,10 +184,14 @@ export default abstract class Pulling {
     this.state.opening = true;
     this.state.opened = false;
 
+    if (this.openPanelClass) {
+      document.documentElement.classList.add(this.openPanelClass);
+    }
+
     const offset = this.offset();
     if (offset > 0) {
       const duration = `${this.timing * (1 - offset / this.width)}ms`;
-      
+
       this.menu.style.transitionDuration = duration;
       this.panel.style.transitionDuration = duration;
     }
@@ -198,7 +205,7 @@ export default abstract class Pulling {
 
       Object.assign(this.menu.style, this.styles.open.menu);
       Object.assign(this.panel.style, this.styles.open.panel);
-      
+
       this.emit('opened');
     };
     if (offset === this.width) {
@@ -230,11 +237,11 @@ export default abstract class Pulling {
     const offset = this.offset();
     if (offset > 0) {
       const duration = `${this.timing * offset / this.width}ms`;
-      
+
       this.menu.style.transitionDuration = duration;
       this.panel.style.transitionDuration = duration;
     }
-    
+
     Object.assign(this.menu.style, this.styles.closed.menu);
     Object.assign(this.panel.style, this.styles.closed.panel);
 
@@ -244,7 +251,11 @@ export default abstract class Pulling {
 
       Object.assign(this.menu.style, this.styles.closed.menu);
       Object.assign(this.panel.style, this.styles.closed.panel);
-      
+
+      if (this.openPanelClass) {
+        document.documentElement.classList.remove(this.openPanelClass);
+      }
+
       this.emit('closed');
     };
     if (offset === 0) {
@@ -255,7 +266,7 @@ export default abstract class Pulling {
 
     return this;
   }
-  
+
   toggle(condition: boolean) {
     if (condition === true) {
       this.open();

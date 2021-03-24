@@ -25,9 +25,9 @@ interface Array<T> {
 
 type sides = 'left' | 'right';
 type modes = 'drawer' | 'reveal';
-type timingFunctions = 'linear' | 'ease' | 'ease-in' | 'ease-out' | 
+type timingFunctions = 'linear' | 'ease' | 'ease-in' | 'ease-out' |
   'ease-in-out' | 'step-start' | 'step-end';
-type eventNames = 'beforeclose' | 'closed' |'beforeopen' | 'opened' | 
+type eventNames = 'beforeclose' | 'closed' |'beforeopen' | 'opened' |
   'touchstart' | 'touchmove' | 'touchend';
 
 interface Options {
@@ -49,8 +49,8 @@ interface Options {
    */
   mode?: modes;
 
-  /** 
-   * the number of pixels from the edge of the viewport 
+  /**
+   * the number of pixels from the edge of the viewport
    * in which a touch event will be accepted
    * (default: `25`)
    */
@@ -99,4 +99,10 @@ interface Options {
    * (default: `true`)
    */
   ignoreScrollables?: boolean;
+
+  /**
+   * Class to add to the `<html>` element when the panel is open or opening
+   * (default: `null`)
+   */
+   openPanelClass?: string;
 }
